@@ -1,0 +1,7 @@
+output/
+
+*.tgz
+*.gz
+# IDE
+.idea
+.vscode
