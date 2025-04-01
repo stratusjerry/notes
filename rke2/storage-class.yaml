@@ -1,0 +1,18 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: aws-ebs-k8
+  labels:
+    deploy: aws-ebs-k8
+    namespace: monitoring
+provisioner: ebs.csi.aws.com
+volumeBindingMode: Immediate #WaitForFirstConsumer
+parameters:
+  type: gp3
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+allowedTopologies:
+- matchLabelExpressions:
+  - key: topology.ebs.csi.aws.com/zone
+    values:
+    - us-east-1b # This has to match the AZ your RKE2 server is in
