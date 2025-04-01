@@ -19,6 +19,14 @@ git config --global --unset user.email
 git config --global init.defaultBranch main
 ```
 
+## Signing a commit using GPG and SSH keys
+```bash
+git config gpg.format ssh
+git config commit.gpgSign true
+# Use the first key in the SSH agent, versus defining a public key path or literal public key string
+git config gpg.ssh.defaultKeyCommand "ssh-add -L"
+```
+
 ## Various Utility Commands
 ```bash
 # List all git branches
@@ -101,7 +109,7 @@ Amend a Git commit to a previous date (only works on current commit unless rebas
 git commit --amend --no-edit --date="3 days ago"
 #git commit --amend --no-edit --date="2024-07-10T14:00:00"
 #git push --force-with-lease
-``````
+```
 
 ## Releases and tagging
 ? When creating a Gitlab release, what should the tag message be? If left blank, a lightweight tag is created.
@@ -330,7 +338,7 @@ git clone git@gitlab.com:stratusjerry/gitlab.git
 ##   'setx' may be used to persist environment variables
 ```
 
-# Git Lines of Code metrics
+## Git Lines of Code metrics
 
 ```bash
 # Get a variety of stats on an authors modified lines in a branch
@@ -338,12 +346,11 @@ git log --author="stratusjerry" --pretty=tformat: --numstat \
 | gawk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s removed lines: %s total lines: %s\n", add, subs, loc }' -
 ```
 
-# Secrets in Git (`git-crypt`, `SOPS`)
+## Secrets in Git (`git-crypt`, `SOPS`)
 git-crypt : only uses GPG keys
 
-## git-crypt
 
-# Forking an old repository version
+## Forking an old repository version (wip)
 We want to create a fork of the [terraform-aws-dynamodb-table](https://github.com/terraform-aws-modules/terraform-aws-dynamodb-table) repo that supports the version of Terraform AWS Provider we are using (`4.9.0`) and only keep the most recent commit and tags that support that version. The repo contains 1 branch (`master`) which makes this easier
 
 > Notes: the AWS provider version level goes from `4.59` in tag `v3.3.0` to `5.21` in tag `v4.0.0`, commit [d596c253d91c7b44b35f62c520f724d86a2bef23](https://github.com/terraform-aws-modules/terraform-aws-dynamodb-table/commit/d596c253d91c7b44b35f62c520f724d86a2bef23)
