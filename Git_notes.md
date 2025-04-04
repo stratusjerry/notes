@@ -25,6 +25,9 @@ git config gpg.format ssh
 git config commit.gpgSign true
 # Use the first key in the SSH agent, versus defining a public key path or literal public key string
 git config gpg.ssh.defaultKeyCommand "ssh-add -L"
+# Rebase a branch with main and re-sign (to prevent a merge commit)
+git rebase -S main
+git push --force
 ```
 
 ## Various Utility Commands
@@ -336,6 +339,17 @@ git clone git@gitlab.com:stratusjerry/gitlab.git
 ## Other Notes:
 ##   'GIT_SSH_COMMAND' variable takes precedence in newer Git version
 ##   'setx' may be used to persist environment variables
+```
+
+### Modified Files with no text changes
+Windows git may show modified files with no text changes due to auto End Of Line changes or file mode differences
+```bash
+# Use git diff to view issues with specific '.sh' files, optional argument '--ignore-space-at-eol'
+git diff *.sh
+# Set autocrlf to false
+git config core.autocrlf false
+# Set filemode considerations to false
+git config core.fileMode false
 ```
 
 ## Git Lines of Code metrics
