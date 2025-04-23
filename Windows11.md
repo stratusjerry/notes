@@ -14,3 +14,10 @@ reg.exe delete "HKCU\Software\Classes\CLSID\{D93ED569-3B3E-4BFF-8355-3C44F6A52BB
 rem Restart Explorer to make settings above appear
 taskkill /f /im explorer.exe & start explorer.exe
 ```
+
+Launch Old Windows 10 Cleanup Manager
+```powershell
+cleanmgr /d C:
+# Launch Drive Properties (Shows Disk Space Used)
+(New-Object -ComObject Shell.Application).NameSpace(17).ParseName('C:\').InvokeVerb('Properties')
+```
