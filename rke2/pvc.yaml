@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    deploy: pvc-k8
+  name: pvc-k8
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: aws-ebs-k8
+  resources:
+    requests:
+      storage: 10Gi

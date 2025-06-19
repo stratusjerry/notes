@@ -1,0 +1,7 @@
+controller:
+  podAnnotations:
+    iam.amazonaws.com/role: system-user
+
+node:
+  podAnnotations:
+    iam.amazonaws.com/role: system-user
