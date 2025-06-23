@@ -1,7 +1,7 @@
 Fixes for Windows 11
 ===
 
-File Explorer Fixes:
+## File Explorer Fixes:
 ```batch
 rem Disable new context menu:
 reg.exe add "HKCU\Software\Classes\CLSID\{86CA1AA0-34AA-4E8B-A509-50C905BAE2A2}\InprocServer32" /f /ve
@@ -15,9 +15,29 @@ rem Restart Explorer to make settings above appear
 taskkill /f /im explorer.exe & start explorer.exe
 ```
 
-Launch Old Windows 10 Cleanup Manager
+## Launch Old Windows 10 Cleanup Manager
 ```powershell
 cleanmgr /d C:
 # Launch Drive Properties (Shows Disk Space Used)
 (New-Object -ComObject Shell.Application).NameSpace(17).ParseName('C:\').InvokeVerb('Properties')
+```
+
+## Windows Task Scheduler
+Create a Windows Scheduled Task to set an alarm for a certain time
+
+```powershell
+$hrDelay = 4  # Configurable alarm delay
+$un = "$env:USERNAME"
+$taskName = "Alarm"
+$actionArg = "${un} /w 'An alarm to Leave' "
+$action = New-ScheduledTaskAction -Execute "msg" -Argument $actionArg
+$description = "An alarm for a time"
+$loggedInUser = $env:USERDOMAIN + "\" + $un
+$principal = New-ScheduledTaskPrincipal -UserId $loggedInUser
+$ct = Get-Date
+$dt = $ct.AddHours($hrDelay)
+$trigger = New-ScheduledTaskTrigger -Once -At $dt
+$settings = New-ScheduledTaskSettingsSet
+$task = New-ScheduledTask -Description $description -Action $action -Principal $principal -Trigger $trigger -Settings $settings
+Register-ScheduledTask "Alarm" -InputObject $task
 ```
