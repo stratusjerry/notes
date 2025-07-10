@@ -234,6 +234,21 @@ git rebase origin/main
 git push origin test-rebase --force
 ```
 
+## Force reset current main contents to a single commit
+```bash
+git checkout main
+# Create a new orphan branch (no parent commits)
+git checkout --orphan new-main
+git add .
+git commit -m "Initial commit"
+# Force push local single commit branch to remote main
+git push -f origin new-main:main
+# Switch back to local main and clean up
+git checkout main
+git reset --hard origin/main
+git branch -D new-main
+```
+
 ## Add branches from main repo into fork
 ```bash
 git remote add upstream git@gitlab.com:foo/bar.git
@@ -339,6 +354,17 @@ git clone git@gitlab.com:stratusjerry/gitlab.git
 ## Other Notes:
 ##   'GIT_SSH_COMMAND' variable takes precedence in newer Git version
 ##   'setx' may be used to persist environment variables
+```
+
+If Github authentication (`git pull`) is successful in Cygwin (using `ssh-agent`) but not in Vscode terminal, try using Pageant and debug
+```powershell
+# Verify Github auth via plink
+plink -v git@github.com
+# Check the Git sshCommand setting
+git config --global core.sshCommand
+git config --local core.sshCommand
+# Quick fix, change the local repo's git config to use plink (TODO: Verify this won't break Cygwin)
+git config --local core.sshCommand "plink"
 ```
 
 ### Modified Files with no text changes
