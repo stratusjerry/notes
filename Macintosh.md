@@ -12,7 +12,21 @@ defaults write NSGlobalDomain com.apple.scrollwheel.scaling -float 1.7
 
 ```
 
+## Time Machine setup
+1. Setup an external Hard Drive as a Time Machine backup location, named `TimeMachine`, and format as `APFS`
+1. Enable File Sharing
+   1. Go to System Settings (or System Preferences in older macOS versions) > `General` > `Sharing`.
+   1. Enable `File Sharing`
+      1. Also, Select `i`, then `Options` and make sure "Share files and folders using SMB" is enabled
+1. Add the Drive as a shared folder. Under `File Sharing` -> `i` -> `Shared Folder`, click `+` and select `/Volumes/TimeMachine`. TODO: may need to validate user r+w is correct
+1. Add the new Share as a Time Machine Destination. Under `File Sharing` -> `i` -> `Shared Folder`, select the `TimeMachine` folder (setup in the previous step); right click and select `Advanced Options...`; Check `Share as a Time Machine backup destination`; Click `OK`; Click `Done`
+1. Create a user account per Mac computer using the backup. `1:1` helps us enforce quotas per user/folder. Naming convention `mac1`, `mac2`, etc
+   1. Go to System Settings (or System Preferences in older macOS versions) > `Users & Groups`
+   1. Select `Add User...`; New User: `Sharing Only`, Full Name: `mac1 backup`, Password: `lol`, Verify: `lol`
+1. TODO: Setup Time Machine on each Mac, be sure to exclude directories like `~/Library/Containers/com.docker.docker/`
+
 ## TODO
 - Fix App Store Failure to login
 - Fix Finder default view settings (`defaults`)
 - Research changing keyboard shortcuts to `Ctrl` (especially copy/paste/save)
+- Change `Alt` + `Tab` from App only to Windows in an App?
