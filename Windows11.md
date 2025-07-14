@@ -41,3 +41,16 @@ $settings = New-ScheduledTaskSettingsSet
 $task = New-ScheduledTask -Description $description -Action $action -Principal $principal -Trigger $trigger -Settings $settings
 Register-ScheduledTask "Alarm" -InputObject $task
 ```
+
+## Windows Subsystem for Linux (WSL)
+```powershell
+wsl --list --online # Show available Linux distributions
+wsl --install -d Ubuntu-24.04 # Downloaded newest Ubuntu
+wsl --list --running
+wsl --shutdown	# Gracefully shuts down all running WSL distros.
+# Show wsl disk usage
+Get-Item "$env:USERPROFILE\AppData\Local\Packages\*\LocalState\*.vhdx", "$env:USERPROFILE\AppData\Local\Docker\wsl\disk\*.vhdx" -ErrorAction SilentlyContinue | ForEach-Object { "{0,-70} {1,6:N1} GB" -f $_.FullName, ($_.Length / 1GB) }
+```
+
+### Restricting WSL Windows Host Drive folder access
+Currently there is no official support **from the Windows Host** to restrict WSL VM access to Windows Host folders. The only (less secure) supported option is to use ['/etc/wsl.conf'](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#automount-settings) from within a WSL VM to restrict folder access via `automount` and `mountFsTab`(`/etc/fstab`).
