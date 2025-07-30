@@ -216,11 +216,24 @@ git reset --hard upstream/main
 git push origin main --force
 ```
 
-## Revert a file(s) from a specific commit
+## Revert file(s) or a directory from a specific commit OR branch
 ```bash
+# Restore files from a commit
 git checkout c5f511 -- file1/to/restore file2/to/restore
 git checkout 8cc111e1 -- foo/bar/file1 foo/bar/file2 foo/bar/file3
 git checkout d7111a51 -- foo/file1 foo/file2
+# Restore a subfolder from a branch
+git checkout myfeaturebranch
+git checkout "origin/main" -- path/to/subfolder/
+#   Optionally, use restore added in version 2.23.0
+git restore --source=origin/main path/to/subfolder/
+# To undo subfolder restore, the checkout and restore commands do not have ability to 
+#   remove files that may have been restored from main but don't exist in myfeaturebranch 
+#   so the folder needs to be deleted, then branch subfolder restored
+rm -rf path/to/subfolder/
+#   Use EITHER checkout or restore command below to restore myfeaturebranch subfolder
+git checkout myfeaturebranch -- path/to/subfolder/
+git git restore --source=myfeaturebranch path/to/subfolder/
 # Optionally, use "cherry-pick -n" to stage files from a commit but not "commit" them
 git cherry-pick -n "1d9ea111fe1111e56d4f4f7a44d7b8211111111"
 ```
