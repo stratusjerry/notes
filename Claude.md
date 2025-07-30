@@ -1,4 +1,4 @@
-Claude Setup
+Claude Code Setup
 ===
 
 ## On Windows using WSL
@@ -36,4 +36,11 @@ nvm use
 npm install @anthropic-ai/claude-code
 # Run with npx
 npx claude-code
+```
+
+## Claude Code Commands
+```bash
+/agents   # Creates and manage agents
+/history  # Shows your recent prompts and responses in Claude Code.
+/clear    # Clears the current conversation context.
 ```
