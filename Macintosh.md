@@ -23,7 +23,19 @@ defaults write NSGlobalDomain com.apple.scrollwheel.scaling -float 1.7
 1. Create a user account per Mac computer using the backup. `1:1` helps us enforce quotas per user/folder. Naming convention `mac1`, `mac2`, etc
    1. Go to System Settings (or System Preferences in older macOS versions) > `Users & Groups`
    1. Select `Add User...`; New User: `Sharing Only`, Full Name: `mac1 backup`, Password: `lol`, Verify: `lol`
-1. TODO: Setup Time Machine on each Mac, be sure to exclude directories like `~/Library/Containers/com.docker.docker/`
+1. Setup Time Machine on each Mac, be sure to exclude directories like
+   ```bash
+   sudo tmutil addexclusion "~/Library/Containers/com.docker.docker/"
+   sudo tmutil addexclusion "~/Library/Containers/com.utmapp.UTM/Data/"
+   sudo tmutil addexclusion "~/.android/"
+   # Verify commands above worked
+   defaults read /Library/Preferences/com.apple.TimeMachine SkipPaths
+   ```
+1. TODO add file size restrictions on per mac created timemachine `.sparsebundle` file
+
+## Fix Mac File Open Dialogs not showing Hidden Folders
+Temporary Fix to show hidden files in File picker window  (Vscode .git folder, Time Machine Exclusions Picker, etc) 
+is to use key combo `Ctrl` + `Shift` + `.`. TODO: Research if this can be change via `defaults`
 
 ## TODO
 - Fix App Store Failure to login
