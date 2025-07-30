@@ -32,6 +32,11 @@ defaults write NSGlobalDomain com.apple.scrollwheel.scaling -float 1.7
    defaults read /Library/Preferences/com.apple.TimeMachine SkipPaths
    ```
 1. TODO add file size restrictions on per mac created timemachine `.sparsebundle` file
+1. TODO document deleting exclude directories from previous backups
+   1. `System Settings` -> `Privacy & Security` -> `Full Disk Access` -> Select `Terminal`
+      ```bash
+      tmutil listbackups
+      ```
 
 ## Fix Mac File Open Dialogs not showing Hidden Folders
 Temporary Fix to show hidden files in File picker window  (Vscode .git folder, Time Machine Exclusions Picker, etc) 
