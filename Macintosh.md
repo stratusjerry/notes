@@ -12,6 +12,12 @@ defaults write NSGlobalDomain com.apple.scrollwheel.scaling -float 1.7
 
 ```
 
+### Developer Setup
+```bash
+# Setup git, python, pip3
+xcode-select --install # Click through the prompt
+```
+
 ## Time Machine setup
 1. Setup an external Hard Drive as a Time Machine backup location, named `TimeMachine`, and format as `APFS`
 1. Enable File Sharing
@@ -47,6 +53,8 @@ is to use key combo `Ctrl` + `Shift` + `.`. TODO: Research if this can be change
 - Fix Finder default view settings (`defaults`)
 - Research changing keyboard shortcuts to Windows Style
   - `Ctrl` commands like Copy `Ctrl` + `c`; Paste`Ctrl` + `v`; Save `Ctrl` + `v`
+    - Begin/End of word "tab" navigation like `Ctrl` + `←` and `Ctrl` + `→`
+      - Group selection like `Shift` + `Ctrl` + `←` and `Shift` + `Ctrl` + `→`
     - Verify commands work across application like Main Mac, Finder, Vscode, Terminal, Notes, etc
   - `Home` and `End` keys
   - Mouse wheel Click and drag isn't scrolling in a page (Chrome, Vscode)
