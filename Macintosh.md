@@ -18,6 +18,13 @@ defaults write NSGlobalDomain com.apple.scrollwheel.scaling -float 1.7
 xcode-select --install # Click through the prompt
 ```
 
+### SSH Setup
+To setup SSH, like to use vscode-ssh from another box:
+1. Go to Apple menu → System Settings (or System Preferences in older macOS versions) → `General` → `Sharing`
+1. Click `Remote Login` and select specific users/group
+1. Configure to only allow key based access
+   1. echo "your_public_key_content" >> ~/.ssh/authorized_keys
+
 ## Time Machine setup
 1. Setup an external Hard Drive as a Time Machine backup location, named `TimeMachine`, and format as `APFS`
 1. Enable File Sharing
