@@ -47,6 +47,8 @@ Register-ScheduledTask "Alarm" -InputObject $task
 wsl --list --online # Show available Linux distributions
 wsl --install -d Ubuntu-24.04 # Downloaded newest Ubuntu
 wsl --list --running
+wsl --version # Get wsl version
+wsl --update # Updates wsl, doesn't prompt, see https://github.com/microsoft/WSL/releases
 wsl --shutdown	# Gracefully shuts down all running WSL distros.
 # Show wsl disk usage
 Get-Item "$env:USERPROFILE\AppData\Local\Packages\*\LocalState\*.vhdx", "$env:USERPROFILE\AppData\Local\Docker\wsl\disk\*.vhdx" -ErrorAction SilentlyContinue | ForEach-Object { "{0,-70} {1,6:N1} GB" -f $_.FullName, ($_.Length / 1GB) }
