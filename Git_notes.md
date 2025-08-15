@@ -142,9 +142,9 @@ git pull --rebase
 ## Change the order of commits in a branch
 ```bash
 # Interactively change the order of commits in branch "foo", which is 3 commits ahead of main
-#  Set vscode as git editor for pretty rebasing
-#  git config --global core.editor "code --wait"
 git checkout foo
+#  Set vscode as git editor for easier GUI interactive rebase
+git config --global core.editor "code --wait"
 git rebase -i main
 # Make changes here
 # force push to origin/foo
