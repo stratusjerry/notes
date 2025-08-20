@@ -48,6 +48,14 @@ npx claude-code
 /status   # See running config (Env Vars, inherited settings, etc)
 ```
 
+### Claude Code Flags
+```bash
+# Restore Realtime token usage by running in verbose mode
+claude --verbose
+#YOLO mode, should only be run from a Container, VM, or other sandbox
+export IS_SANDBOX=1 && claude --dangerously-skip-permissions
+```
+
 ## Claude Code on Bedrock
 Per [Anthropic Documentation](https://docs.anthropic.com/en/docs/claude-code/amazon-bedrock) if using Bedrock API keys, only environmental variable should be needed
 
