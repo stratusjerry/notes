@@ -1,7 +1,53 @@
 Claude Code Setup
 ===
 
-## On Windows using WSL
+## Windows
+
+### Windows Binary (Beta)
+Taken from https://claude.ai/install.ps1
+
+```powershell
+$GCS_BUCKET = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases"
+$DOWNLOAD_DIR = "${env:USERPROFILE}\.claude\downloads"
+$platform = "win32-x64"
+# stable, latest, or specific version
+$version = "stable"
+$ProgressPreference = 'SilentlyContinue'
+$apiVer = (Invoke-WebRequest "${GCS_BUCKET}/${version}").Content  # 1.0.123
+$manifest = "${GCS_BUCKET}/${apiVer}/manifest.json"
+mkdir ${DOWNLOAD_DIR}
+Invoke-WebRequest "${manifest}" -OutFile "${DOWNLOAD_DIR}\manifest.json"
+$binaryPath = "${DOWNLOAD_DIR}\claude-${version}-${platform}.exe"
+Invoke-WebRequest "${GCS_BUCKET}/${apiVer}/${platform}/claude.exe" -OutFile "${binaryPath}"
+# Checksum here
+$binHash = (Get-FileHash "${binaryPath}" -Algorithm SHA256).Hash
+$jsonContent = Get-Content -Path "${DOWNLOAD_DIR}\manifest.json" -Raw | ConvertFrom-Json
+$nestedValue = ($jsonContent.platforms.${platform}.checksum).ToUpper()
+Write-Host "BinHash: ${binHash}"
+Write-Host "Manifest Hash: ${nestedValue}"
+& $binaryPath install
+```
+
+### Windows using NPM
+
+```powershell
+cd "C:\Git\local\subdir"
+# Install nvm using chocolatey, abandoned attempt to install nvm locally (variable error finding settings.txt)
+choco install -y nvm
+#$ProgressPreference = 'SilentlyContinue'
+#Invoke-WebRequest 'https://github.com/coreybutler/nvm-windows/releases/download/1.2.2/nvm-noinstall.zip' -OutFile .\nvm-noinstall.zip
+#Expand-Archive .\nvm-noinstall.zip .\
+# Set NVM Variable (may also be able to be set by helper script)
+#$env:NVM_HOME = $PWD.Path
+#.\nvm.exe install --lts
+# Use chocolatey installed nvm (may need to open new terminal to get PATH vars)
+nvm install --lts
+nvm use lts
+npm install @anthropic-ai/claude-code
+.\node_modules\.bin\claude
+```
+
+### Windows using WSL
 ```powershell
 # Launch Ubuntu VM
 wsl -d Ubuntu-24.04 # May prompt for a default Unix user account
@@ -21,7 +67,6 @@ npm install -g @anthropic-ai/claude-code
 claude login # TODO API key alternative?
 # From Claude prompt
 /init
-
 ```
 
 ## On Mac
