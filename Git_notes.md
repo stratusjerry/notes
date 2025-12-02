@@ -387,6 +387,9 @@ Windows git may show modified files with no text changes due to auto End Of Line
 git diff *.sh
 # Set autocrlf to false
 git config core.autocrlf false
+#   After setting autocrlf false, may need to "reset" local files to default EOL
+git rm --cached -r .
+git rest --hard
 # Set filemode considerations to false
 git config core.fileMode false
 ```
