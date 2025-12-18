@@ -11,6 +11,10 @@ rem Disable Explorer command bar:
 reg.exe add "HKCU\Software\Classes\CLSID\{D93ED569-3B3E-4BFF-8355-3C44F6A52BB5}\InprocServer32" /f /ve
 rem Restore Explorer command bar:
 reg.exe delete "HKCU\Software\Classes\CLSID\{D93ED569-3B3E-4BFF-8355-3C44F6A52BB5}" /f
+rem Disable Window Snapping
+reg add "HKCU\Control Panel\Desktop" /v WindowArrangementActive /t REG_SZ /d "0" /f
+rem Restore Window Snapping
+reg add "HKCU\Control Panel\Desktop" /v WindowArrangementActive /t REG_SZ /d "1" /f
 rem Restart Explorer to make settings above appear
 taskkill /f /im explorer.exe & start explorer.exe
 ```
