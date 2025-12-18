@@ -22,6 +22,41 @@ cleanmgr /d C:
 (New-Object -ComObject Shell.Application).NameSpace(17).ParseName('C:\').InvokeVerb('Properties')
 ```
 
+## Group Policy
+Preferred Windows Options, some may not work due to MS Changes
+### `Computer Configuration` > `Administrative Templates`
+-  `Start Menu and Taskbar`
+   - `Remove Personalized Website Recommendations from the Recommended section in the Start Menu` : **Enabled**
+   - `Remove Recommended section from Start Menu` : **Enabled**
+- `Windows Components/Search`
+   - `Allow Cloud Search` : **Disabled**
+   - `Allow Cortana` : **Disabled**
+   - `Do not allow web search` : **Enabled**
+   - `Don't search the web or display web results in Search` : **Enabled**
+   - `Don't search the web or display web results in Search over metered connections` : **Enabled**
+- `Windows Components/Widgets`
+   - `Allow widgets` : **Disabled**
+   - `Disable Widgets Board` : **Enabled**
+- `Windows Components/Windows AI`
+   - `Allow export of Recall and snapshot information` : **Disabled**
+   - `Allow Recall to be Enabled` : **Disabled**
+   - `Turn off saving snapshots for use with Recall` : **Enabled**
+- `Windows Components/Windows Update/Manage end user experience/Configure Automatic Updates`
+   - `Configure automatic updating:` : **3 - Auto download and notify for install**
+   - > Note: may toggle below based on drivers
+   - `Install updates for other Microsoft products` : **Enabled**
+- `Windows Components/Windows Update/Manage updates offered from Windows Update`
+   - `Which Windows product version would you like to receive feature updates for? e.g., Windows 10` : **Windows 11**
+   - `Target Version for Feature Updates` : **_24H2_** / **_25H2_**
+### `User Configuration` > `Administrative Templates`
+- `Start Menu and Taskbar` `Force classic Start Menu` : **Enabled**
+- `Windows Components` > `File Explorer`
+   - `Turn off display of recent search entries in the File Explorer search box` : **Enabled**
+- `Windows Components` > `Search`
+   - `Turn off storage and display of search history` : **Enabled**
+- `Windows Components` > `Windows Copilot`
+   - `Turn off Windows Copilot` : **Enabled**
+
 ## Windows Task Scheduler
 Create a Windows Scheduled Task to set an alarm for a certain time
 
@@ -49,7 +84,7 @@ wsl --install -d Ubuntu-24.04 # Downloaded newest Ubuntu
 wsl --list --running
 wsl --version # Get wsl version
 wsl --update # Updates wsl, doesn't prompt, see https://github.com/microsoft/WSL/releases
-wsl --shutdown	# Gracefully shuts down all running WSL distros.
+wsl --shutdown # Gracefully shuts down all running WSL distros.
 # Show wsl disk usage
 Get-Item "$env:USERPROFILE\AppData\Local\Packages\*\LocalState\*.vhdx", "$env:USERPROFILE\AppData\Local\Docker\wsl\disk\*.vhdx" -ErrorAction SilentlyContinue | ForEach-Object { "{0,-70} {1,6:N1} GB" -f $_.FullName, ($_.Length / 1GB) }
 ```

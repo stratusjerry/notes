@@ -389,7 +389,7 @@ git diff *.sh
 git config core.autocrlf false
 #   After setting autocrlf false, may need to "reset" local files to default EOL
 git rm --cached -r .
-git rest --hard
+git reset --hard
 # Set filemode considerations to false
 git config core.fileMode false
 ```
