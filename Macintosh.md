@@ -84,3 +84,11 @@ is to use key combo `Command` + `Shift` + `.`. TODO: Research if this can be cha
   - `Home` and `End` keys
   - Mouse wheel Click and drag isn't scrolling in a page (Chrome, Vscode)
   - Change `Alt` + `Tab` from App only to Windows in an App?
+
+## Rsync folders over SSH
+To mirror directories between Macintosh computers (after enabling SSH), target subdir "Folder" does not have to exist
+```bash
+# -r (recursive); -t (Preserve creation and modification dates and times) -v (verbose); -n (dry run)
+#    -a (archive mode) (-rlptgoD); -E (extended attributes)
+rsync -rtvn --progress --exclude='.DS_Store' ~/Desktop/Folder/ username@remote_host:~/Desktop/Folder/
+```
