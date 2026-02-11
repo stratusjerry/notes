@@ -28,6 +28,8 @@ Preferred Windows Options, some may not work due to MS Changes
 -  `Start Menu and Taskbar`
    - `Remove Personalized Website Recommendations from the Recommended section in the Start Menu` : **Enabled**
    - `Remove Recommended section from Start Menu` : **Enabled**
+- `System/Group Policy`
+   - `Continue experiences on this device` : **Disabled**
 - `Windows Components/Search`
    - `Allow Cloud Search` : **Disabled**
    - `Allow Cortana` : **Disabled**
