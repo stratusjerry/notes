@@ -123,10 +123,42 @@ export MAX_THINKING_TOKENS=1024
 Use `~/.claude/settings.json` for persistent values:
 ```json
 {
-    "env": {
-        "CLAUDE_CODE_USE_BEDROCK": "1",
-        "AWS_REGION": "us-east-1",
-        "ANTHROPIC_SMALL_FAST_MODEL": "us.anthropic.claude-3-5-haiku-20241022-v1:0"
-    }
+  "env": {
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "AWS_REGION": "us-east-1",
+    "ANTHROPIC_SMALL_FAST_MODEL": "us.anthropic.claude-3-5-haiku-20241022-v1:0"
+  }
 }
 ```
+
+## Claude Code on LMStudio
+Using LM Studio version `0.4.1` or later
+- Optionally from `Server Settings`, enable `Serve on Local Network` and restart server
+- From Developer tab click `+ Load Model` and select option `Manually choose model load parameters`
+  - Select a model (`GPT OSS 30B`, `Qwen3 Coder 30B`, etc) and increase the default `Context Length` to desired size
+
+Create custom `~/.claude/lmstudio-settings.json` (using wsl `wsl -d Ubuntu-24.04`):
+```json
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://192.168.1.1:1234",
+    "ANTHROPIC_AUTH_TOKEN": "dummy",
+    "API_TIMEOUT_MS": "3000000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
+    "ANTHROPIC_DEFAULT_MODEL": "default_model",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "default_model",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "default_model",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "default_model"
+  }
+}
+```
+
+Now Launch 
+```bash
+claude --settings ~/.claude/lmstudio-settings.json
+# From Claude type
+/model # select "default"
+```
+
+[LM Studio Documentation](https://lmstudio.ai/blog/claudecode)
+
