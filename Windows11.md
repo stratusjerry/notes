@@ -59,6 +59,10 @@ Preferred Windows Options, some may not work due to MS Changes
 - `Windows Components` > `Windows Copilot`
    - `Turn off Windows Copilot` : **Enabled**
 
+## Manual Fixing Windows 11
+Windows 11 do not seem to always honor GPO disabling of features (at least in Win 11 GUIs), try these manual settings
+- Disable Win 11 Click To Do AI feature: `Settings` > `Privacy & security` > `Click to Do` and un-check `Click to Do`
+
 ## Windows Task Scheduler
 Create a Windows Scheduled Task to set an alarm for a certain time
 
