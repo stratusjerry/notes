@@ -120,6 +120,21 @@ export MAX_THINKING_TOKENS=1024
 #unset CLAUDE_CODE_USE_BEDROCK
 ```
 
+Powershell ENV test
+```powershell
+$env:CLAUDE_CODE_USE_BEDROCK = "1"
+$env:AWS_BEARER_TOKEN_BEDROCK = "your-bedrock-api-key"
+# Set our region and settings
+$env:AWS_REGION = "us-east-1"
+$env:ANTHROPIC_MODEL = "anthropic.claude-opus-4-6-v1"
+# Below may be needed
+$env:ANTHROPIC_MODEL = "us.anthropic.claude-opus-4-6-v1[1m]"
+$env:ANTHROPIC_SMALL_FAST_MODEL = "anthropic.claude-haiku-4-5-20251001-v1:0"
+# Long running jobs on Bedrock
+$env:CLAUDE_CODE_MAX_OUTPUT_TOKENS = "64000"
+$env:MAX_THINKING_TOKENS = "10000"
+```
+
 Use `~/.claude/settings.json` for persistent values:
 ```json
 {
@@ -128,6 +143,18 @@ Use `~/.claude/settings.json` for persistent values:
     "AWS_REGION": "us-east-1",
     "ANTHROPIC_SMALL_FAST_MODEL": "us.anthropic.claude-3-5-haiku-20241022-v1:0"
   }
+}
+```
+
+Windows `${env:USERPROFILE}\.claude\settings.json` using newer models
+```json
+{
+  "env": {
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "AWS_REGION": "us-east-1",
+    "ANTHROPIC_SMALL_FAST_MODEL": "anthropic.claude-haiku-4-5-20251001-v1:0"
+  },
+  "model": "us.anthropic.claude-opus-4-6-v1[1m]"
 }
 ```
 
