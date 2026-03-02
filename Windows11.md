@@ -43,6 +43,9 @@ Preferred Windows Options, some may not work due to MS Changes
    - `Allow export of Recall and snapshot information` : **Disabled**
    - `Allow Recall to be Enabled` : **Disabled**
    - `Turn off saving snapshots for use with Recall` : **Enabled**
+   - `Disable Click to Do` : **Enabled**
+   - `Disable Settings agentic search experience` : **Enabled**
+   - `Remove Microsoft Copilot App` : **Enabled**
 - `Windows Components/Windows Update/Manage end user experience/Configure Automatic Updates`
    - `Configure automatic updating:` : **3 - Auto download and notify for install**
    - > Note: may toggle below based on drivers
