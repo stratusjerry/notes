@@ -69,6 +69,14 @@ claude login # TODO API key alternative?
 /init
 ```
 
+*Work in Progress Sandboxed install*
+```bash
+sudo apt-get install bubblewrap socat
+# Create a unique uv venv subfolder (to not conflict with Windows)
+uv venv .venv-linux
+source .venv-linux/bin/activate
+```
+
 ## On Mac
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
