@@ -91,3 +91,20 @@ Get-Item "$env:USERPROFILE\AppData\Local\Packages\*\LocalState\*.vhdx", "$env:US
 
 ### Restricting WSL Windows Host Drive folder access
 Currently there is no official support **from the Windows Host** to restrict WSL VM access to Windows Host folders. The only (less secure) supported option is to use ['/etc/wsl.conf'](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#automount-settings) from within a WSL VM to restrict folder access via `automount` and `mountFsTab`(`/etc/fstab`).
+
+## HyperV
+Enable HyperV VM Nested Virtualization to run wsl, docker, or other virtualization. From a Powershell Administrator prompt with the VM stopped, run:
+```powershell
+Set-VMProcessor -VMName "YOUR_VM" -ExposeVirtualizationExtensions $true
+```
+
+To run AmazonLinux 2023 as a VM 
+1. Download and extract the [hyperv image](https://cdn.amazonlinux.com/al2023/os-images/2023.10.20260302.1/hyperv/al2023-hyperv-2023.10.20260302.1-kernel-6.1-x86_64.xfs.gpt.vhdx.zip)
+1. Download the corresponding version [seed.iso](https://cdn.amazonlinux.com/os-images/2.0.20260302.0/seed.iso) and extract the contents
+1. Edit the `user-data` file with username, password, ssh key, etc. Optionally edit the `meta-data` file
+1. Create a new `.iso` file with the modified files. Can be done from wsl via `wsl -d Ubuntu-24.04` then running:
+   ```bash
+   sudo apt install genisoimage
+   genisoimage -output "INIT.iso" -volid cidata -joliet -rock "user-data" "meta-data"
+   ```
+1. Create new HyperV Attach the vhdx file as Hard Drive and `INIT.iso` as DVD drive
