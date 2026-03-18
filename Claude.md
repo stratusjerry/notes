@@ -170,9 +170,10 @@ Windows `${env:USERPROFILE}\.claude\settings.json` using newer models
 Using LM Studio version `0.4.1` or later
 - Optionally from `Server Settings`, enable `Serve on Local Network` and restart server
 - From Developer tab click `+ Load Model` and select option `Manually choose model load parameters`
-  - Select a model (`GPT OSS 30B`, `Qwen3 Coder 30B`, etc) and increase the default `Context Length` to desired size
+- Select a model (`GPT OSS 20B`, `Qwen3 Coder 30B`, etc) and increase default `Context Length` to desired tokens
+  > Note: default is often `4096`, Claude Code requires a MUCH higher default value (`22000`, `32768`, or `65536` if available)
 
-Create custom `~/.claude/lmstudio-settings.json` (using wsl `wsl -d Ubuntu-24.04`):
+Create custom `~/.claude/lmstudio-settings.json` (using wsl `wsl -d Ubuntu-24.04`) OR Windows `${env:USERPROFILE}\.claude\lmstudio-settings.json`:
 ```json
 {
   "env": {
@@ -191,6 +192,7 @@ Create custom `~/.claude/lmstudio-settings.json` (using wsl `wsl -d Ubuntu-24.04
 Now Launch 
 ```bash
 claude --settings ~/.claude/lmstudio-settings.json
+# Windows Powershell: claude --settings ${env:USERPROFILE}\.claude\lmstudio-settings.json
 # From Claude type
 /model # select "default"
 ```
