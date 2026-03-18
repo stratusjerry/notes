@@ -145,10 +145,48 @@ git pull --rebase
 git checkout foo
 #  Set vscode as git editor for easier GUI interactive rebase
 git config --global core.editor "code --wait"
+#  For interactive rebase in Remote-SSH OR via Gitlens plugin, may need to add flag `--reuse-window`. Optionally
+#   dedicated window flag `--new-window`
 git rebase -i main
 # Make changes here
 # force push to origin/foo
 git push --force
+```
+
+## Add branches from a user's fork to our fork
+User's forked "main" and feature branch may be in different commit order than our fork.
+TODO: only fetch the user branch we want and branch to our fork
+```bash
+git clone git@github.com:stratusjerry/salt.git
+cd salt
+# Add user's fork as "upstream"
+git remote add Akm0d https://github.com/Akm0d/salt.git
+git remote add dwoz https://github.com/dwoz/salt.git
+# Replace the default wildcard refspec with the single-branch we care 
+#   about (so we don't fetch all their branches)
+git config remote.Akm0d.fetch '+refs/heads/relenv_fetch:refs/remotes/Akm0d/relenv_fetch'
+git config remote.dwoz.fetch '+refs/heads/masterrelenvssh:refs/remotes/dwoz/masterrelenvssh'
+# Fetch user's branches, don't pull their tags
+git fetch --no-tags Akm0d
+git fetch --no-tags dwoz
+# Make backup branches before we try to rebase their branch
+git checkout -b relenv_fetch Akm0d/relenv_fetch
+git checkout -b backup-relenv_fetch Akm0d/relenv_fetch
+git checkout -b masterrelenvssh dwoz/masterrelenvssh
+git checkout -b backup-masterrelenvssh dwoz/masterrelenvssh
+# Push branches to our remote fork, updating target branch
+git push -u origin "relenv_fetch"
+git push -u origin "backup-relenv_fetch"
+git push -u origin "masterrelenvssh"
+git push -u origin "backup-masterrelenvssh"
+# git config "vscode-merge-base" still show original tracking branch so let's delete them
+git config --unset branch.relenv_fetch.vscode-merge-base
+git config --unset branch.backup-relenv_fetch.vscode-merge-base
+git config --unset branch.masterrelenvssh.vscode-merge-base
+git config --unset branch.backup-masterrelenvssh.vscode-merge-base
+# Now you can try rebasing
+git checkout relenv_fetch
+git rebase -i origin/master
 ```
 
 ## Duplicate (copy) a file, preserving git line history
