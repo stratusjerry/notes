@@ -108,3 +108,5 @@ To run AmazonLinux 2023 as a VM
    genisoimage -output "INIT.iso" -volid cidata -joliet -rock "user-data" "meta-data"
    ```
 1. Create new HyperV Attach the vhdx file as Hard Drive and `INIT.iso` as DVD drive
+
+> TODO: static IP for VM
