@@ -9,7 +9,6 @@ defaults read NSGlobalDomain com.apple.swipescrolldirection
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 defaults write NSGlobalDomain com.apple.mouse.scaling -float 3
 defaults write NSGlobalDomain com.apple.scrollwheel.scaling -float 1.7
-
 ```
 
 ### Developer Setup
@@ -20,6 +19,8 @@ xcode-select --install # Click through the prompt
 echo "syntax on" > ~/.vimrc
 echo "alias ll='ls -lasth --color'" >> ~/.zshrc
 ```
+
+Disable terminal beeps in `Terminal` → `Settings` → `Profiles` → `Advanced` → `Audio bell`
 
 ### SSH Setup
 To setup SSH, like to use vscode-ssh from another box:
