@@ -86,11 +86,15 @@ wsl --version # Get wsl version
 wsl --update # Updates wsl, doesn't prompt, see https://github.com/microsoft/WSL/releases
 wsl --shutdown # Gracefully shuts down all running WSL distros.
 # Show wsl disk usage
-Get-Item "$env:USERPROFILE\AppData\Local\Packages\*\LocalState\*.vhdx", "$env:USERPROFILE\AppData\Local\Docker\wsl\disk\*.vhdx" -ErrorAction SilentlyContinue | ForEach-Object { "{0,-70} {1,6:N1} GB" -f $_.FullName, ($_.Length / 1GB) }
+#Get-Item "$env:USERPROFILE\AppData\Local\Packages\*\LocalState\*.vhdx", "$env:USERPROFILE\AppData\Local\Docker\wsl\disk\*.vhdx" -ErrorAction SilentlyContinue | ForEach-Object { "{0,-70} {1,6:N1} GB" -f $_.FullName, ($_.Length / 1GB) }
+Get-ChildItem -Path "$env:LOCALAPPDATA\wsl" -Recurse -Filter "ext4.vhdx" | Select-Object FullName, @{N='SizeGB';E={[math]::Round($_.Length/1GB, 2)}}
 ```
 
 ### Restricting WSL Windows Host Drive folder access
 Currently there is no official support **from the Windows Host** to restrict WSL VM access to Windows Host folders. The only (less secure) supported option is to use ['/etc/wsl.conf'](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#automount-settings) from within a WSL VM to restrict folder access via `automount` and `mountFsTab`(`/etc/fstab`).
+
+### Speedup file IO
+[Documentation](https://learn.microsoft.com/en-us/windows/wsl/filesystems#file-storage-and-performance-across-file-systems) to speedup file IO by moving files to wsl2 Linux VM. OS and paths can be accessed from Windows File Explorer Path `\\wsl$\`. You can then use the VScode wsl extension and do an SSH remote session to the wsl Linux VM.
 
 ## HyperV
 Enable HyperV VM Nested Virtualization to run wsl, docker, or other virtualization. From a Powershell Administrator prompt with the VM stopped, run:
@@ -110,3 +114,6 @@ To run AmazonLinux 2023 as a VM
 1. Create new HyperV Attach the vhdx file as Hard Drive and `INIT.iso` as DVD drive
 
 > TODO: static IP for VM
+
+### HyperV failures on newer Linux `Ubuntu 26.04` Quick Start
+TODO: Research Linux failure, possibly related to Guest using Wayland versus HyperV xrdp
