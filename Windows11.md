@@ -80,7 +80,7 @@ Register-ScheduledTask "Alarm" -InputObject $task
 ## Windows Subsystem for Linux (WSL)
 ```powershell
 wsl --list --online # Show available Linux distributions
-wsl --install -d Ubuntu-24.04 # Downloaded newest Ubuntu
+wsl --install -d Ubuntu-26.04 # Downloaded newest Ubuntu
 wsl --list --running
 wsl --version # Get wsl version
 wsl --update # Updates wsl, doesn't prompt, see https://github.com/microsoft/WSL/releases
@@ -102,7 +102,7 @@ Enable HyperV VM Nested Virtualization to run wsl, docker, or other virtualizati
 Set-VMProcessor -VMName "YOUR_VM" -ExposeVirtualizationExtensions $true
 ```
 
-To run AmazonLinux 2023 as a VM 
+To run AmazonLinux 2023 as a VM
 1. Download and extract the [hyperv image](https://cdn.amazonlinux.com/al2023/os-images/2023.10.20260302.1/hyperv/al2023-hyperv-2023.10.20260302.1-kernel-6.1-x86_64.xfs.gpt.vhdx.zip)
 1. Download the corresponding version [seed.iso](https://cdn.amazonlinux.com/os-images/2.0.20260302.0/seed.iso) and extract the contents
 1. Edit the `user-data` file with username, password, ssh key, etc. Optionally edit the `meta-data` file
