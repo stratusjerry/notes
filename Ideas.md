@@ -10,3 +10,6 @@ Ideas to Research
 ## GPU
 - [`nvtop`](https://github.com/Syllo/nvtop)
 - [`amdsmi`](https://github.com/ROCm/rocm-systems/tree/develop/projects/amdsmi#python-library)
+
+## Gaming
+- Logitech G15 software LCD compatibility for modern games, audio bar, etc
