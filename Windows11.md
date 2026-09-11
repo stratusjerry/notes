@@ -78,6 +78,7 @@ Register-ScheduledTask "Alarm" -InputObject $task
 ```
 
 ## Windows Subsystem for Linux (WSL)
+
 ```powershell
 wsl --list --online # Show available Linux distributions
 wsl --install -d Ubuntu-26.04 # Downloaded newest Ubuntu
@@ -96,6 +97,25 @@ Currently there is no official support **from the Windows Host** to restrict WSL
 
 ### Speedup file IO
 [Documentation](https://learn.microsoft.com/en-us/windows/wsl/filesystems#file-storage-and-performance-across-file-systems) to speedup file IO by moving files to wsl2 Linux VM. OS and paths can be accessed from Windows File Explorer Path `\\wsl$\`. You can then use the VScode wsl extension and do an SSH remote session to the wsl Linux VM.
+
+### WSL Containers (preview)
+WSL pre-release version 2.9.3+ available via `wsl --update --pre-release` includes container support via tool `wslc`. WSL and WSLC support GPU paravirtualized access (DirectX / GPU PV), (which is not a PCIe "passthrough") and can be tested via `wslc run --rm --gpus all nvidia/cuda:13.3.1-base-ubuntu26.04 nvidia-smi`
+
+WSL commands mock [docker](./Docker_Notes.md#docker-cheatsheet) commands like
+```powershell
+# Run a container
+wslc run -it --rm alpine:3.24 /bin/sh -c "echo Hello world from WSL container!"
+# List available images
+wslc image ls
+# Run a web server
+wslc run -it --rm -d -p 8080:80 --name web nginx
+# Get its content
+curl 127.0.0.1:8080
+# List the container
+wslc container ps
+# Stop the container
+wslc container stop web
+```
 
 ## HyperV
 Enable HyperV VM Nested Virtualization to run wsl, docker, or other virtualization. From a Powershell Administrator prompt with the VM stopped, run:
