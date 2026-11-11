@@ -78,19 +78,44 @@ Register-ScheduledTask "Alarm" -InputObject $task
 ```
 
 ## Windows Subsystem for Linux (WSL)
+
 ```powershell
 wsl --list --online # Show available Linux distributions
-wsl --install -d Ubuntu-24.04 # Downloaded newest Ubuntu
+wsl --install -d Ubuntu-26.04 # Downloaded newest Ubuntu
 wsl --list --running
 wsl --version # Get wsl version
+winget list --id Microsoft.WSL # Get wsl version and latest
 wsl --update # Updates wsl, doesn't prompt, see https://github.com/microsoft/WSL/releases
 wsl --shutdown # Gracefully shuts down all running WSL distros.
 # Show wsl disk usage
-Get-Item "$env:USERPROFILE\AppData\Local\Packages\*\LocalState\*.vhdx", "$env:USERPROFILE\AppData\Local\Docker\wsl\disk\*.vhdx" -ErrorAction SilentlyContinue | ForEach-Object { "{0,-70} {1,6:N1} GB" -f $_.FullName, ($_.Length / 1GB) }
+#Get-Item "$env:USERPROFILE\AppData\Local\Packages\*\LocalState\*.vhdx", "$env:USERPROFILE\AppData\Local\Docker\wsl\disk\*.vhdx" -ErrorAction SilentlyContinue | ForEach-Object { "{0,-70} {1,6:N1} GB" -f $_.FullName, ($_.Length / 1GB) }
+Get-ChildItem -Path "$env:LOCALAPPDATA\wsl" -Recurse -Filter "ext4.vhdx" | Select-Object FullName, @{N='SizeGB';E={[math]::Round($_.Length/1GB, 2)}}
 ```
 
 ### Restricting WSL Windows Host Drive folder access
 Currently there is no official support **from the Windows Host** to restrict WSL VM access to Windows Host folders. The only (less secure) supported option is to use ['/etc/wsl.conf'](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#automount-settings) from within a WSL VM to restrict folder access via `automount` and `mountFsTab`(`/etc/fstab`).
+
+### Speedup file IO
+[Documentation](https://learn.microsoft.com/en-us/windows/wsl/filesystems#file-storage-and-performance-across-file-systems) to speedup file IO by moving files to wsl2 Linux VM. OS and paths can be accessed from Windows File Explorer Path `\\wsl$\`. You can then use the VScode wsl extension and do an SSH remote session to the wsl Linux VM.
+
+### WSL Containers (preview)
+WSL pre-release version 2.9.3+ available via `wsl --update --pre-release` includes container support via tool `wslc`. WSL and WSLC support GPU paravirtualized access (DirectX / GPU PV), (which is not a PCIe "passthrough") and can be tested via `wslc run --rm --gpus all nvidia/cuda:13.3.1-base-ubuntu26.04 nvidia-smi`
+
+WSL commands mock [docker](./Docker_Notes.md#docker-cheatsheet) commands like
+```powershell
+# Run a container
+wslc run -it --rm alpine:3.24 /bin/sh -c "echo Hello world from WSL container!"
+# List available images
+wslc image ls
+# Run a web server
+wslc run -it --rm -d -p 8080:80 --name web nginx
+# Get its content
+curl 127.0.0.1:8080
+# List the container
+wslc container ps
+# Stop the container
+wslc container stop web
+```
 
 ## HyperV
 Enable HyperV VM Nested Virtualization to run wsl, docker, or other virtualization. From a Powershell Administrator prompt with the VM stopped, run:
@@ -98,7 +123,7 @@ Enable HyperV VM Nested Virtualization to run wsl, docker, or other virtualizati
 Set-VMProcessor -VMName "YOUR_VM" -ExposeVirtualizationExtensions $true
 ```
 
-To run AmazonLinux 2023 as a VM 
+To run AmazonLinux 2023 as a VM
 1. Download and extract the [hyperv image](https://cdn.amazonlinux.com/al2023/os-images/2023.10.20260302.1/hyperv/al2023-hyperv-2023.10.20260302.1-kernel-6.1-x86_64.xfs.gpt.vhdx.zip)
 1. Download the corresponding version [seed.iso](https://cdn.amazonlinux.com/os-images/2.0.20260302.0/seed.iso) and extract the contents
 1. Edit the `user-data` file with username, password, ssh key, etc. Optionally edit the `meta-data` file
@@ -108,3 +133,8 @@ To run AmazonLinux 2023 as a VM
    genisoimage -output "INIT.iso" -volid cidata -joliet -rock "user-data" "meta-data"
    ```
 1. Create new HyperV Attach the vhdx file as Hard Drive and `INIT.iso` as DVD drive
+
+> TODO: static IP for VM
+
+### HyperV failures on newer Linux `Ubuntu 26.04` Quick Start
+TODO: Research Linux failure, possibly related to Guest using Wayland versus HyperV xrdp
