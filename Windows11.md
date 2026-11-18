@@ -63,6 +63,19 @@ Preferred Windows Options, some may not work due to MS Changes
    - `Turn off Windows Copilot` : **Enabled**
 
 ## Manual Fixing Windows 11
+Windows Search consistently breaks searching for files, with the indicative search box having the AI coloring and "Try describing an image or file". Folders under "These folders won't be included when searching your PC" seem to work. Easiest fix may be to disable the service
+
+```powershell
+# Disable
+Set-Service WSearch -StartupType Disabled
+Stop-Service WSearch -Force
+# Optionally Enable
+sc.exe config WSearch start= delayed-auto
+Start-Service WSearch
+```
+
+> Search Index saved in `C:\ProgramData\Microsoft\Search\Data\Applications\Windows\`
+
 Windows 11 do not seem to always honor GPO disabling of features (at least in Win 11 GUIs), try these manual settings
 - Disable Win 11 Click To Do AI feature: `Settings` > `Privacy & security` > `Click to Do` and un-check `Click to Do`
 
