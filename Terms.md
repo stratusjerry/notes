@@ -25,3 +25,6 @@ A collection of tech terms
 
 ### ML specific
 - `ONNX Runtime` : Microsoft C++ cross-platform inference and training machine-learning accelerator 
+
+## Quotes
+- "*When a measure becomes a target, it ceases to be a good measure*"
