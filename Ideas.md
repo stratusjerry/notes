@@ -23,6 +23,10 @@ Documenting decisions and intent across an Organization. Implementation methods 
 - Agent and sub-agent architecture and tasking
    - https://github.com/getpaseo/paseo
 - Agentic Harness (likely microVM)
+- Lemonade
+   - add NPU monitoring
+   - add wslc backend
+   - fix gemma4-NPU model name
 - Claude Skills
    - ponytail
 - `draw.io` MCP or SKILL
